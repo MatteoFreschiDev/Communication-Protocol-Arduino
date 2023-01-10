@@ -16,8 +16,8 @@ const byte address[6] = "00001";
 /** STRUCTS **/
 // A struct is just a bunch of variables in a trenchcoat
 struct read_values{
-  // In this example there's just two ints in this struct
-  int value1, value2; 
+  // In this struct there are two variables
+  int x_axis, y_axis; 
 };
 
 /**--------------------------------**/
@@ -26,7 +26,7 @@ struct read_values parse_message(char* message) {
   // Variable where to store the parsed values
   struct read_values values;
   // Read the values from the string and store them in the struct
-  sscanf(message, "%d, %d", &(values.value1), &(values.value2));
+  sscanf(message, "%d, %d", &(values.x_axis), &(values.y_axis));
   // Return the struct as result of the function
   return values;
 }
@@ -52,8 +52,8 @@ void loop() {
     // Parse the received text to a structured variable (defined above)
     struct read_values new_values = parse_message(text);
     // Print the values that were parsed
-    Serial.print(new_values.value1);
+    Serial.print(new_values.x_axis);
     Serial.print(" ");
-    Serial.println(new_values.value2);
+    Serial.println(new_values.y_axis);
   }
 }
