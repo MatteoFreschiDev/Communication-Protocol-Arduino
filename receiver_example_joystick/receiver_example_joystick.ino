@@ -20,6 +20,7 @@ struct read_values{
   int x_axis, y_axis; 
 };
 
+
 /**--------------------------------**/
 
 struct read_values parse_message(char* message) {
@@ -41,6 +42,7 @@ void setup() {
   radio.openReadingPipe(0, address);
   // Set module as receiver
   radio.startListening();
+  
 }
 
 void loop() {
@@ -55,5 +57,9 @@ void loop() {
     Serial.print(new_values.x_axis);
     Serial.print(" ");
     Serial.println(new_values.y_axis);
+  
+
+  
   }
+      
 }
