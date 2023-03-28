@@ -100,10 +100,10 @@ void loop() {
   }
   else{
   digitalWrite(motor1pin1, LOW);
-  digitalWrite(motor1pin1, HIGH);
+  digitalWrite(motor1pin2, HIGH);
  
   digitalWrite(motor3pin1, LOW);
-  digitalWrite(motor3pin1, HIGH);
+  digitalWrite(motor3pin2, HIGH);
 
   }
    if (sx>600){

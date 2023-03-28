@@ -8,7 +8,7 @@
 #define MESSAGE_LENGTH 20
 
 /** MODULE SPECIFIC CODE **/
-// Create an RF24 object, specifying CE and CSN       
+// Create an RF24 object, specifying CE and CSN 
 RF24 radio(9, 8);
 // Create a variable to store the address through which two modules communicate
 const byte address[6] = "00001";
@@ -30,7 +30,9 @@ int motor3pin1 = 14;
 int motor3pin2 = 15;
 int motor4pin1 = 16;
 int motor4pin2 = 17;
-int dx, sx;
+int dx, sx, obstacle_front;
+int infrared_sensor_front = 7; 
+
 
 /**--------------------------------**/
 
@@ -64,7 +66,7 @@ void setup() {
   pinMode(motor3pin2, OUTPUT);
   pinMode(motor4pin1, OUTPUT);
   pinMode(motor4pin2, OUTPUT);
-  
+  pinMode(infrared_sensor_front, INPUT);
 }
 
 void loop() {
@@ -83,7 +85,8 @@ void loop() {
 
   dx=new_values.x;
   sx=new_values.y;
-
+  obstacle_front = digitalRead(infrared_sensor_front);
+  
   if (dx>=600){
   digitalWrite(motor1pin1, HIGH);
   digitalWrite(motor1pin2, LOW);
@@ -92,18 +95,18 @@ void loop() {
   digitalWrite(motor3pin2, LOW);
 
   }
- else if (dx>400 && dx<600){
+ else if (dx>400 && dx<600 ){
   digitalWrite(motor1pin1, LOW);
   digitalWrite(motor1pin2, LOW); 
   digitalWrite(motor3pin1, LOW);
   digitalWrite(motor3pin2, LOW);
   }
-  else{
+  else if (dx<=400 && obstacle_front==HIGH){
   digitalWrite(motor1pin1, LOW);
-  digitalWrite(motor1pin1, HIGH);
+  digitalWrite(motor1pin2, HIGH);
  
   digitalWrite(motor3pin1, LOW);
-  digitalWrite(motor3pin1, HIGH);
+  digitalWrite(motor3pin2, HIGH);
 
   }
    if (sx>600){
@@ -121,7 +124,7 @@ void loop() {
   digitalWrite(motor4pin1, LOW);
   digitalWrite(motor4pin2, LOW);
   }
-  else{
+  else if (sx<=400 && obstacle_front==HIGH){
   digitalWrite(motor2pin1, LOW);
   digitalWrite(motor2pin2, HIGH);
 
@@ -130,4 +133,4 @@ void loop() {
   }
 }    
    delay (100);   
-}
+}  
